@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Param, ParseIntPipe } from '@nestjs/common';
 
 import { Thing } from './thing.interface';
 import { ThingsService } from './things.service';
@@ -14,7 +14,7 @@ export class ThingsController {
     }
 
     @Get(':id')
-    async getThing(@Param('id') id): Promise<Thing> {
+    async getThing(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE })) id: string): Promise<Thing> {
         return this.thingsService.getThing(id);
     }
 }
