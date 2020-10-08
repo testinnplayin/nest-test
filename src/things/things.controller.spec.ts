@@ -1,5 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Thing } from './thing.interface';
+
+import { HttpException } from '@nestjs/common';
+
 import { ThingsController } from './things.controller';
 import { ThingsService } from './things.service';
 
@@ -32,6 +34,19 @@ describe('ThingsController', () => {
         key1: 'baz',
         key2: 'boz',
       });
+    });
+
+    it('should return an error if thing not found', async () => {
+      expect.assertions(2);
+      try {
+        await controller.getThing('5');
+      } catch (err) {
+        expect(err).toBeInstanceOf(HttpException);
+        expect(err.getResponse()).toMatchObject({
+          status: 404,
+          error: 'No thing found with an id of 5'
+        });
+      }
     });
   });
 });

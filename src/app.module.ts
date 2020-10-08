@@ -1,17 +1,28 @@
-import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ThingsController } from './things/things.controller';
-import { ThingMiddleware } from './things/thing.middleware';
-import { ThingsService } from './things/things.service';
+
+import { Thing } from "./things/thing.entity";
+import { ThingsApiModule } from './things/things-api.module';
+
 
 @Module({
-  imports: [],
-  controllers: [AppController, ThingsController],
-  providers: [AppService, ThingsService],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: "mongodb",
+      name: "nestMongo",
+      host: "localhost",
+      port: 27017,
+      database: "nest-test",
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+      entities: [Thing],
+    }),
+    ThingsApiModule,
+  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
-export class AppModule implements NestModule {
-  async configure(consumer: MiddlewareConsumer) {
-    await consumer.apply(ThingMiddleware).forRoutes(ThingsController);
-  }
-}
+export class AppModule {}

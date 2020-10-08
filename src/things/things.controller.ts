@@ -1,6 +1,6 @@
 import { Controller, Get, HttpStatus, Param, ParseIntPipe } from '@nestjs/common';
 
-import { Thing } from './thing.interface';
+import { Thing } from './thing.entity';
 import { ThingsService } from './things.service';
 
 
