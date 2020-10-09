@@ -12,13 +12,11 @@ import { ThingsApiModule } from './things/things-api.module';
   imports: [
     TypeOrmModule.forRoot({
       type: "mongodb",
-      name: "nestMongo",
-      host: "localhost",
-      port: 27017,
-      database: "nest-test",
+      url: 'mongodb://127.0.0.1:27017/nest-test',
       useUnifiedTopology: true,
       useNewUrlParser: true,
       entities: [Thing],
+      synchronize: true,
     }),
     ThingsApiModule,
   ],

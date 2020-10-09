@@ -1,7 +1,9 @@
-import { Controller, Get, HttpStatus, Param, ParseIntPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
+import { ThingDto } from './create.dto';
 import { Thing } from './thing.entity';
 import { ThingsService } from './things.service';
+import { ValidateSchema } from '../validation.pipe';
 
 
 @Controller('things')
@@ -10,11 +12,16 @@ export class ThingsController {
 
     @Get()
     async getThings(): Promise<Thing[]> {
-        return this.thingsService.getThings();
+        return await this.thingsService.getThings();
     }
 
-    @Get(':id')
-    async getThing(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE })) id: string): Promise<Thing> {
-        return this.thingsService.getThing(id);
+    @Get(':name')
+    getThing(@Param('name') name: string): Promise<Thing> {
+        return this.thingsService.getThing(name);
+    }
+
+    @Post()
+    async createThing(@Body(new ValidateSchema()) createThingDto: ThingDto) {
+        this.thingsService.createThing(createThingDto);
     }
 }
