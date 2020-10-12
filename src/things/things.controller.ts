@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UsePipes } from '@nestjs/common';
 
 import { ThingDto } from './create.dto';
 import { Thing } from './thing.entity';
@@ -21,7 +21,8 @@ export class ThingsController {
     }
 
     @Post()
-    async createThing(@Body(new ValidateSchema()) createThingDto: ThingDto) {
+    @UsePipes(new ValidateSchema(ThingDto._schema))
+    async createThing(@Body() createThingDto: ThingDto) {
         this.thingsService.createThing(createThingDto);
     }
 }

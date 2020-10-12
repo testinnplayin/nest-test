@@ -1,0 +1,21 @@
+{
+    "title": "ThingSchema",
+    "$comment": "This is the schema for Thing without MongoDB ObjectId",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "maxLength": 150,
+            "minLength": 5
+        },
+        "key1": {
+            "type": "string",
+            "maxLength": 150
+        },
+        "key2": {
+            "type": "string",
+            "maxLength": 150
+        }
+    },
+    "required": ["name"]
+}
