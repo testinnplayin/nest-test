@@ -10,7 +10,7 @@
         },
         "key1": {
             "type": "string",
-            "maxLength": 2
+            "maxLength": 150
         },
         "key2": {
             "type": "string",

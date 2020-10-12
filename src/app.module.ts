@@ -4,6 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
+import { SchemasApiModule } from './schemas/schema-api.module'
+
 import { Thing } from "./things/thing.entity";
 import { ThingsApiModule } from './things/things-api.module';
 
@@ -18,6 +20,7 @@ import { ThingsApiModule } from './things/things-api.module';
       entities: [Thing],
       synchronize: true,
     }),
+    SchemasApiModule,
     ThingsApiModule,
   ],
   controllers: [AppController],

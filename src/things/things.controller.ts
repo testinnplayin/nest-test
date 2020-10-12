@@ -24,5 +24,6 @@ export class ThingsController {
     @UsePipes(new ValidateSchema(ThingDto._schema))
     async createThing(@Body() createThingDto: ThingDto) {
         this.thingsService.createThing(createThingDto);
+        return 'Thing created.';
     }
 }
